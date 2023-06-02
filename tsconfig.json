@@ -2,20 +2,15 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "target": "es6",
-    "lib": [
-      "es2019"
-    ],
+    "lib": ["es2019"],
     "module": "commonjs",
     "skipLibCheck": true,
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "outDir": "./test",
-    "baseUrl": "src",
-    "paths": {
-      "@/*": ["*"]
-    }
+
   },
-  "include": ["src/**/*"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }
