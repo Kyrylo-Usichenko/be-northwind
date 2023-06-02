@@ -1,6 +1,6 @@
+import { CustomerController } from '@/controllers/customers';
 import { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
 import { Router } from 'express';
-import { CustomerController } from '../controllers/customers';
 
 export class Customers {
 	router: Router;

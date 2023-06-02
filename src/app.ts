@@ -3,17 +3,19 @@ import cors from 'cors';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import exress from 'express';
 import { Customers } from './routers/customers';
+
 const app = exress();
 const port = 4321;
+app.use(cors());
+
 const sqlite = new Database('./src/main.db');
 const db = drizzle(sqlite);
-app.use(cors());
 
 const pageRoutes = [
 	{
 		router: new Customers('/customers', db),
 	},
-];
+
 
 pageRoutes.forEach((route) => {
 	const { path, router } = route.router;

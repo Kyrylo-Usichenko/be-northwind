@@ -9,8 +9,11 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "outDir": "./test",
-
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },
-  "include": ["**/*.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
