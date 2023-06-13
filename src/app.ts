@@ -1,27 +1,36 @@
-import Database from 'better-sqlite3';
 import cors from 'cors';
-import { drizzle } from 'drizzle-orm/better-sqlite3';
 import exress from 'express';
-import { Customers } from './routers/customers';
+import Controller from './controllers';
 
-const app = exress();
-const port = 4321;
-app.use(cors());
+class App {
+	app: exress.Application;
+	private port: number;
+	private controllers: Controller[];
+	constructor(port: number, controllers: Controller[]) {
+		this.app = exress();
+		this.port = port;
+		this.controllers = controllers;
+		this.initializeMiddlewares();
+		this.initializeControllers();
+	}
+	public start() {
+		try {
+			this.app.listen(this.port, () => {
+				console.log(`http://localhost:${this.port}/`);
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	private initializeControllers() {
+		this.controllers.forEach((controller) => {
+			this.app.use(controller.path, controller.router);
+		});
+	}
+	private initializeMiddlewares() {
+		this.app.use(exress.json());
+		this.app.use(cors());
+	}
+}
 
-const sqlite = new Database('./src/main.db');
-const db = drizzle(sqlite);
-
-const pageRoutes = [
-	{
-		router: new Customers('/customers', db),
-	},
-
-
-pageRoutes.forEach((route) => {
-	const { path, router } = route.router;
-	app.use(path, router);
-});
-
-app.listen(port, () => {
-	console.log(`Server listening on port ${port}`);
-});
+export default App;

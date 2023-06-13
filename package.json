@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild src/app.ts --platform=node --target=node16 --format=cjs --bundle --minify --main-fields=main --outfile=dist/app.js",
+    "build": "esbuild src/main.ts --platform=node --target=node16 --format=cjs --bundle --minify --main-fields=main --outfile=dist/app.js",
     "server": "node dist/app.js",
     "start": "npm run build && npm run server",
-    "dev": "nodemon src/app.ts"
+    "dev": "nodemon src/main.ts"
   },
   "keywords": [],
   "author": "",
