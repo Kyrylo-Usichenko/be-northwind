@@ -2,7 +2,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "target": "es6",
-    "lib": ["es2019"],
+    "lib": ["es2021"],
     "module": "commonjs",
     "skipLibCheck": true,
     "strict": true,
@@ -10,6 +10,7 @@
     "moduleResolution": "node",
     "outDir": "./test",
     "baseUrl": "src",
+    "allowJs": true,
     "paths": {
       "@/*": ["*"]
     }

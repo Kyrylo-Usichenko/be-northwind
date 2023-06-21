@@ -11,7 +11,19 @@ export class CustomersRepository {
 			.limit(count)
 			.offset(start)
 			.all();
-		return customers;
+		return {
+			customers,
+		};
+	};
+	public getAllQuery = (start: number, count: number) => {
+		const customersQuery = this.db
+			.select()
+			.from(customersTable)
+			.limit(count)
+			.offset(start)
+			.toSQL();
+
+		return customersQuery;
 	};
 	public getOne = (id: string) => {
 		const customer = this.db
@@ -20,5 +32,15 @@ export class CustomersRepository {
 			.where(eq(customersTable.id, id))
 			.get();
 		return customer;
+	};
+
+	public getOneQuery = (id: string) => {
+		const query = this.db
+			.select()
+			.from(customersTable)
+			.where(eq(customersTable.id, id))
+			.toSQL();
+
+		return query;
 	};
 }
