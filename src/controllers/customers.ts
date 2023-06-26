@@ -1,8 +1,6 @@
+import { CustomersService } from '@/services/Customers';
 import { Request, Response } from 'express';
 import Controller from '.';
-import CustomersService from '@/services/customers';
-
-
 
 class CustomersController extends Controller {
 	constructor(private customers: CustomersService) {
