@@ -1,10 +1,10 @@
+import { ProductsService } from '@/services/products';
 import { Request, Response } from 'express';
 import Controller from '.';
-import CustomersService from '@/services/customers';
 
-class CustomersController extends Controller {
-	constructor(private customers: CustomersService) {
-		super('/customers');
+class ProductsController extends Controller {
+	constructor(private products: ProductsService) {
+		super('/products');
 		this.router.get('/', this.getAll);
 		this.router.get('/:id', this.getOne);
 	}
@@ -13,7 +13,7 @@ class CustomersController extends Controller {
 			const page = Number(req.query.page) || 1;
 			const count = Number(req.query.count) || 20;
 			const start = (page - 1) * count;
-			const response = this.customers.getAll(start, count);
+			const response = this.products.getAll(start, count);
 			return res.send(response);
 		} catch (e) {
 			console.log(e);
@@ -26,7 +26,7 @@ class CustomersController extends Controller {
 			if (!id) {
 				return res.status(400).json({ message: 'Missing id' });
 			}
-			const customer = this.customers.getOne(id);
+			const customer = this.products.getOne(id);
 			if (!customer) {
 				return res.status(404).json({ message: 'Customer not found' });
 			}
@@ -37,4 +37,4 @@ class CustomersController extends Controller {
 		}
 	};
 }
-export default CustomersController;
+export default ProductsController;

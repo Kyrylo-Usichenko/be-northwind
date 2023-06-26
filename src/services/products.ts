@@ -1,14 +1,14 @@
-import { CustomersRepository } from '@/database/repositories/customers';
+import { ProductsRepository } from '@/database/repositories/products';
 
-class CustomersService {
-	constructor(private customers: CustomersRepository) {}
+export class ProductsService {
+	constructor(private products: ProductsRepository) {}
 	public getAll = (start: number, count: number) => {
 		const startTimestamp = Date.now();
-		const customers = this.customers.getAll(start, count);
+		const customers = this.products.getAll(start, count);
 		const endTimestamp = Date.now();
 		const time = endTimestamp - startTimestamp;
 
-		const query = this.customers.getAllQuery(start, count);
+		const query = this.products.getAllQuery(start, count);
 		query.params.forEach((param: any) => {
 			query.sql = query.sql.replace('?', param);
 		});
@@ -21,11 +21,11 @@ class CustomersService {
 	};
 	public getOne = (id: string) => {
 		const startTimestamp = Date.now();
-		const customer = this.customers.getOne(id);
+		const customer = this.products.getOne(id);
 		const endTimestamp = Date.now();
 		const time = endTimestamp - startTimestamp;
 
-		const query = this.customers.getOneQuery(id);
+		const query = this.products.getOneQuery(id);
 		query.params.forEach((param: any) => {
 			query.sql = query.sql.replace('?', param);
 		});
@@ -34,4 +34,3 @@ class CustomersService {
 		return { customer, time, sql: query.sql };
 	};
 }
-export default CustomersService;
