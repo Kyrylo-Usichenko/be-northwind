@@ -1,5 +1,5 @@
 import App from './app';
-import CustomersController from './controllers/customers';
+import CustomersController from './controllers/customers1';
 import OrdersController from './controllers/orders';
 import ProductsController from './controllers/products';
 import db from './database';
