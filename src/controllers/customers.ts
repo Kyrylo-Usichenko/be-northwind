@@ -1,4 +1,4 @@
-import { CustomersService } from '@/services/Customers';
+import CustomersService from '@/services/customers';
 import { Request, Response } from 'express';
 import Controller from '.';
 
