@@ -2,7 +2,7 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const productsTable = sqliteTable('Products', {
 	id: integer('ProductId').primaryKey(),
-	productName: text('ProductName'),
+	name: text('ProductName'),
 	supplierId: integer('SupplierId'),
 	categoriId: integer('CategoryId'),
 	quantityPerUnit: text('QuantityPerUnit'),
