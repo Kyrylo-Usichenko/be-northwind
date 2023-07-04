@@ -31,6 +31,8 @@ export class SuppliersRepository {
 			.from(suppliersTable)
 			.where(eq(suppliersTable.supplierID, id))
 			.get();
+		console.log(supplier);
+
 		return supplier;
 	};
 

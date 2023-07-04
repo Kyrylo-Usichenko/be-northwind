@@ -20,9 +20,10 @@ export class SuppliersService {
 		const supplier = this.suppliers.getOne(id);
 		const endTime = performance.now();
 		const query = this.suppliers.getOneQuery(id);
+		const sql = query.sql;
 		return {
 			supplier,
-			query,
+			sql,
 			time: endTime - startTime,
 		};
 	};
