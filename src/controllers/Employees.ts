@@ -1,10 +1,10 @@
-import { ProductsService } from '@/services/products';
+import { EmployeesService } from '@/services/Employees';
 import { Request, Response } from 'express';
 import Controller from '.';
 
-class ProductsController extends Controller {
-	constructor(private products: ProductsService) {
-		super('/products');
+class EmployeesController extends Controller {
+	constructor(private employees: EmployeesService) {
+		super('/employees');
 		this.router.get('/', this.getAll);
 		this.router.get('/:id', this.getOne);
 	}
@@ -13,7 +13,7 @@ class ProductsController extends Controller {
 			const page = Number(req.query.page) || 1;
 			const count = Number(req.query.count) || 20;
 			const start = (page - 1) * count;
-			const response = this.products.getAll(start, count);
+			const response = this.employees.getAll(start, count);
 			return res.send(response);
 		} catch (e) {
 			console.log(e);
@@ -27,7 +27,7 @@ class ProductsController extends Controller {
 				return res.status(400).json({ message: 'Missing id' });
 			}
 			const idNumber = Number(id);
-			const customer = this.products.getOne(idNumber);
+			const customer = this.employees.getOne(idNumber);
 			if (!customer) {
 				return res.status(404).json({ message: 'Customer not found' });
 			}
@@ -38,4 +38,4 @@ class ProductsController extends Controller {
 		}
 	};
 }
-export default ProductsController;
+export default EmployeesController;

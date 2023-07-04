@@ -109,8 +109,12 @@ class OrdersRepository {
 				shipRegion: ordersTable.shipRegion,
 				shipPostalCode: ordersTable.shipPostalCode,
 				shipCountry: ordersTable.shipCountry,
-				products:
-					sql<Product>`json_group_array(json_object('name', ${productsTable.name}, 'quantity', ${orderDetailsTable.quantity}, 'orderPrice', ${orderDetailsTable.unitPrice}, 'totalPrice', ${orderDetailsTable.quantity} * ${orderDetailsTable.unitPrice}, 'discount', ${orderDetailsTable.discount}
+				products: sql<Product>`json_group_array(json_object(
+						'name', ${productsTable.name}, 
+						'quantity', ${orderDetailsTable.quantity}, 
+						'orderPrice', ${orderDetailsTable.unitPrice}, 
+						'totalPrice', ${orderDetailsTable.quantity} * ${orderDetailsTable.unitPrice}, 
+						'discount', ${orderDetailsTable.discount}
 					))
 					`.mapWith((products) => JSON.parse(products)),
 			})

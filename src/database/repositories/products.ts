@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, like, sql } from 'drizzle-orm';
 import { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
 import { customersTable } from '../schemas/customers';
 import { productsTable } from '../schemas/products';
@@ -12,9 +12,7 @@ export class ProductsRepository {
 			.limit(count)
 			.offset(start)
 			.all();
-		return {
-			products,
-		};
+		return products;
 	};
 	public getAllQuery = (start: number, count: number) => {
 		const customersQuery = this.db
@@ -26,22 +24,46 @@ export class ProductsRepository {
 
 		return customersQuery;
 	};
-	public getOne = (id: string) => {
+	public getOne = (id: number) => {
 		const products = this.db
 			.select()
-			.from(customersTable)
-			.where(eq(customersTable.id, id))
+			.from(productsTable)
+			.where(eq(productsTable.id, id))
 			.get();
 		return products;
 	};
 
-	public getOneQuery = (id: string) => {
+	public getOneQuery = (id: number) => {
 		const query = this.db
 			.select()
-			.from(customersTable)
-			.where(eq(customersTable.id, id))
+			.from(productsTable)
+			.where(eq(productsTable.id, id))
 			.toSQL();
 
 		return query;
+	};
+
+	public getAllCount = () => {
+		const count = this.db
+			.select({
+				count: sql<number>`count(*)`.mapWith(Number),
+			})
+			.from(productsTable)
+			.get();
+		return count.count;
+	};
+
+	public getSearched = (search: string) => {
+		const products = this.db
+			.select({
+				productNeme: productsTable.name,
+				quality: productsTable.quantityPerUnit,
+				price: productsTable.unitPrice,
+				unitsInStock: productsTable.unitsInStock,
+			})
+			.from(productsTable)
+			.where(like(productsTable.name, `%${search}%`))
+			.all();
+		return products;
 	};
 }

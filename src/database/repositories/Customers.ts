@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, like, sql } from 'drizzle-orm';
 import { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
 import { customersTable } from '../schemas/customers';
 
@@ -42,5 +42,29 @@ export class CustomersRepository {
 			.toSQL();
 
 		return query;
+	};
+
+	public getAllCount = () => {
+		const count = this.db
+			.select({
+				count: sql<number>`count(*)`.mapWith(Number),
+			})
+			.from(customersTable)
+			.get();
+		return count.count;
+	};
+
+	public getSearched = (search: string) => {
+		const customers = this.db
+			.select({
+				name: customersTable.companyName,
+				contect: customersTable.contactName,
+				title: customersTable.contactTitle,
+				phone: customersTable.phone,
+			})
+			.from(customersTable)
+			.where(like(customersTable.companyName, `%${search}%`))
+			.all();
+		return customers;
 	};
 }
